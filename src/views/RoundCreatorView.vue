@@ -63,47 +63,53 @@ import {useMainStore} from "@/stores/main";
 </script>
 
 <template>
-  <div class="creation-headliner">
-    <h1 class="creation-headline">Ich hab's richtig, aber ich hab's falsch</h1>
-    <hr class="rounded-creation-underliner">
-  </div>
-
-  <div class="button-container">
-    <button class="back-button" @click="router.back()">Einen Schritt zurück</button>
-    <button class="round-start start-button" @click="startRound">Runde starten</button>
-  </div>
-
-  <article class="section-container input-container">
-    <p>
-      Bitte Regelsatz auswählen:
-    </p>
-
-    <input type="file"
-           id="ruleset-upload" name="uploadedRuleset"
-           accept=".json">
-  </article>
-
-  <article class="section-container">
-    <h2>
-      Teilnehmer
-    </h2>
-
-    <div class="candidate-box">
-      <ul class="candidate-list">
-        <li v-for="(candidate, i) in candidateList" :key="candidate" @click="removeItem(i)">
-          {{ candidate.name }}
-        </li>
-      </ul>
+  <div class="wrapper">
+    <div class="creation-headliner">
+      <h1 class="creation-headline">Ich hab's richtig, aber ich hab's falsch</h1>
+      <hr class="rounded-creation-underliner">
     </div>
-  </article>
 
-  <div class="input-section">
-    <input class="add-candidate" type="text" v-model="candidateName">
-    <button class="right-button" id="add-candidate-list" @click="addItem">Teilnehmer hinzufügen</button>
+    <div class="button-container">
+      <button class="back-button" @click="router.back()">Einen Schritt zurück</button>
+      <button class="round-start start-button" @click="startRound">Runde starten</button>
+    </div>
+
+    <article class="section-container input-container">
+      <p>
+        Bitte Regelsatz auswählen:
+      </p>
+
+      <input type="file"
+             id="ruleset-upload" name="uploadedRuleset"
+             accept=".json">
+    </article>
+
+    <article class="section-container">
+      <h2>
+        Teilnehmer
+      </h2>
+
+      <div class="candidate-box">
+        <ul class="candidate-list">
+          <li v-for="(candidate, i) in candidateList" :key="candidate" @click="removeItem(i)">
+            {{ candidate.name }}
+          </li>
+        </ul>
+      </div>
+    </article>
+
+    <div class="input-section">
+      <input class="add-candidate" type="text" v-model="candidateName">
+      <button class="right-button" id="add-candidate-list" @click="addItem">Teilnehmer hinzufügen</button>
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
 
   .button-container {
     display: flex;
@@ -124,10 +130,13 @@ import {useMainStore} from "@/stores/main";
 
   .section-container {
     font-size: 1.5rem;
-    height: 20vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    p {
+      margin: 0;
+    }
+    padding: 2rem;
   }
 
   .candidate-box {
@@ -156,7 +165,6 @@ import {useMainStore} from "@/stores/main";
   }
 
   .input-container {
-    height: 15vh;
     outline: #000000 solid 1px;
     border-radius: 10px;
     margin: 0 auto;

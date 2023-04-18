@@ -6,4 +6,5 @@ export interface Candidate {
 export interface GameCategory {
     name: string;
     id: number;
+    finisheds?: number[];
 }

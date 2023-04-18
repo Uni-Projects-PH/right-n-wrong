@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useMainStore} from "@/stores/main";
-import {onMounted, ref} from "vue";
-import type {GameCategory} from "@/@types/intern";
+import {onMounted, onUnmounted, ref} from "vue";
+import type {Candidate, GameCategory} from "@/@types/intern";
 
 const store = useMainStore();
 const candidateList = store.getCreatedCandidateList();
@@ -11,6 +11,11 @@ const gameMaxPoints = store.getExtractedMaxPoints() || 5;
 const gameCategories = store.getExtractedGameCategories();
 const numberOfTables = ref(0);
 const points = [100, 200, 300, 400, 500];
+
+let selectedCandidate: Candidate|null = null;
+let selectedCategory: GameCategory|null = null;
+let selectedPoint: number|null = null;
+let isCounting: boolean = false;
 
 function createGameBoard() {
   candidateList?.forEach((candidate) => {
@@ -28,10 +33,53 @@ function createGameBoard() {
 
 onMounted(() => {
   createGameBoard();
+
+  document.addEventListener("keydown", onKeyDown);
 });
 
-function select(cat: GameCategory, point: number) {
-  console.log(cat, point);
+onUnmounted(() => {
+  document.removeEventListener("keydown", onKeyDown);
+});
+
+function onKeyDown(e: KeyboardEvent) {
+  if (e.code === "Enter") {
+    toggleStart();
+  } else if (e.code === "Space" && isCounting && selectedPoint && selectedCandidate) {
+    selectedCandidate.score += selectedPoint;
+  } else if (e.code === "Backspace" && isCounting && selectedPoint && selectedCandidate) {
+    selectedCandidate.score -= selectedPoint;
+  }
+}
+
+function selectPoints(cat: GameCategory, point: number) {
+  if (cat.finisheds && cat.finisheds.includes(point)) {
+    return;
+  }
+
+  selectedCategory = cat;
+  selectedPoint = point;
+}
+
+function selectCandidate(candi: Candidate) {
+  selectedCandidate = candi;
+}
+
+function toggleStart() {
+  if (!selectedCandidate || !selectedCategory || !selectedPoint) {
+    return;
+  }
+
+  if (isCounting) {
+    isCounting = false;
+    selectedPoint = null;
+    selectedCategory = null;
+    selectedCandidate = null;
+    return;
+  }
+
+  selectedCategory.finisheds = selectedCategory.finisheds || [];
+  selectedCategory.finisheds.push(selectedPoint);
+  isCounting = true;
 }
 </script>
 
@@ -43,12 +91,12 @@ function select(cat: GameCategory, point: number) {
   <transition-group tag="div" name="game-board" class="game-board-holder">
     <div class="category-table-wrapper" v-for="(cat, i) in gameCategories">
       <article class="category-table" :key="i">{{ cat.name }}</article>
-      <article v-for="p in points" class="point-table" :key="i + '-' + p" @click="select(cat, p)">{{ p }}</article>
+      <article v-for="p in points" class="point-table" :key="i + '-' + p" @click="selectPoints(cat, p)" :style="{'opacity': cat.finisheds && cat.finisheds.includes(p) ? 0.5 : 1}">{{ p }}</article>
     </div>
   </transition-group>
 
   <div class="candidate-holder">
-    <div class="candidate-table" v-for="(candi, i) in candidateList">
+    <div class="candidate-table" v-for="(candi, i) in candidateList" @click="selectCandidate(candi)">
       <div class="candidate-name" :key="i">{{ candi.name + ':' }}</div>
       <div class="candidate-points">{{ candi.score }}</div>
     </div>
@@ -64,27 +112,30 @@ function select(cat: GameCategory, point: number) {
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
-  cursor: default;
-  background: #a80939;
+  cursor: pointer;
   margin-top: 1.8rem;
 
   .candidate-table {
     border: black solid 2px;
     border-radius: 15px;
     margin-left: 0.8rem;
+    width: 15rem;
+    padding: 0.5rem 1rem;
 
     .candidate-name {
       font-size: 1.8rem;
       font-weight: bolder;
       padding-bottom: 0.5rem;
-      margin: 0 0.5rem 0 0.5rem;
       text-decoration: underline;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .candidate-points {
       font-size: 1.8rem;
       font-weight: bolder;
-      margin: 0.5rem;
     }
   }
 }
