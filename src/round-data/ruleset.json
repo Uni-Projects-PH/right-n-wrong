@@ -1,0 +1,29 @@
+{
+  "categories": [
+    {
+      "name": "Allesamt gemein",
+      "id": 1
+    },
+    {
+      "name": "Peddabytes",
+      "id": 2
+    },
+    {
+      "name": "Korruptionskaraoke",
+      "id": 3
+    },
+    {
+      "name": "Galaxsys",
+      "id": 4
+    },
+    {
+      "name": "S-Tier",
+      "id": 5
+    },
+    {
+      "name": "PICNIC",
+      "id": 6
+    }
+  ],
+  "maxPointTables": 5
+}

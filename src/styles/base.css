@@ -1,0 +1,164 @@
+@font-face {
+  font-family: Oswald;
+  src: url("@/styles/typographs/Oswald-Light.ttf");
+  font-style: normal;
+  font-display: swap;
+}
+:root {
+  font-family: Oswald, sans-serif;
+  color: rgba(0, 0, 0, 0.87);
+  background: rgb(39, 167, 39);
+}
+
+p {
+  font-size: 2.4rem;
+  font-weight: 400;
+  line-height: 1.8;
+  text-align: center;
+}
+
+h2 {
+  font-size: 48px;
+  text-decoration: underline;
+}
+
+.creation-headliner {
+  font-size: 2rem;
+  height: 20vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+hr.rounded-creation-underliner {
+  border-top: 3px solid black;
+  border-radius: 5px;
+  width: 32%;
+  margin-top: -2rem;
+  margin-bottom: 4rem;
+}
+
+.headline-box {
+  font-size: 2rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+hr.rounded-divider {
+  border-top: 3px solid black;
+  border-radius: 5px;
+  width: 32%;
+  margin-bottom: 4rem;
+}
+
+.start-button {
+  box-shadow: inset 0px 1px 0px 0px #a4e271;
+  background: rgb(39, 167, 97);
+  background: linear-gradient(0deg, rgb(39, 167, 97) 35%, rgb(8, 223, 87) 100%);
+  border-radius: 20px;
+  border: 1px solid #000201;
+  display: inline-block;
+  cursor: pointer;
+  color: #000000;
+  font-weight: bold;
+  font-size: 26px;
+  padding: 0.9rem 1.8rem;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #17a658;
+  font-family: Oswald, sans-serif;
+}
+
+.start-button:hover {
+  background: #77a809 linear-gradient(0deg, rgb(8, 223, 87) 100%, rgb(39, 167, 97) 35%);
+}
+
+.start-button:active {
+  position: relative;
+  top: 1px;
+}
+
+.back-button {
+  box-shadow: inset 0px 1px 0px 0px #e27175;
+  background: rgb(167, 39, 39);
+  background: linear-gradient(0deg, rgb(167, 39, 39) 35%, rgb(223, 8, 8) 100%);
+  border-radius: 10px;
+  border: 1px solid #000201;
+  display: inline-block;
+  cursor: pointer;
+  color: #000000;
+  font-weight: bold;
+  font-size: 23px;
+  padding: 0.2rem 1.8rem;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #a61717;
+  font-family: Oswald, sans-serif;
+}
+
+.back-button:hover {
+  background: #a80939 linear-gradient(0deg, rgb(223, 8, 8) 100%, rgb(167, 39, 39) 35%);
+}
+
+.back-button:active {
+  position: relative;
+  top: 1px;
+}
+
+.right-button {
+  box-shadow: inset 0px 1px 0px 0px #a4e271;
+  background: rgb(39, 167, 97);
+  background: linear-gradient(0deg, rgb(39, 167, 97) 35%, rgb(8, 223, 87) 100%);
+  border-radius: 10px;
+  border: 1px solid #000201;
+  display: inline-block;
+  cursor: pointer;
+  color: #000000;
+  font-weight: bold;
+  font-size: 19px;
+  padding: 0.1rem 1.2rem;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #17a658;
+  font-family: Oswald, sans-serif;
+  margin-left: 0.4rem;
+}
+
+.right-button:hover {
+  background: #77a809 linear-gradient(0deg, rgb(8, 223, 87) 100%, rgb(39, 167, 97) 35%);
+}
+
+.right-button:active {
+  position: relative;
+  top: 1px;
+}
+
+.wrong-button {
+  box-shadow: inset 0px 1px 0px 0px #e27175;
+  background: rgb(167, 39, 39);
+  background: linear-gradient(0deg, rgb(167, 39, 39) 35%, rgb(223, 8, 8) 100%);
+  border-radius: 10px;
+  border: 1px solid #000201;
+  display: inline-block;
+  cursor: pointer;
+  color: #000000;
+  font-weight: bold;
+  font-size: 19px;
+  padding: 0.1rem 1.2rem;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #a61717;
+  font-family: Oswald, sans-serif;
+  margin-left: 0.4rem;
+}
+
+.wrong-button:hover {
+  background: #a80939 linear-gradient(0deg, rgb(223, 8, 8) 100%, rgb(167, 39, 39) 35%);
+}
+
+.wrong-button:active {
+  position: relative;
+  top: 1px;
+}
+
+/*# sourceMappingURL=base.css.map */
