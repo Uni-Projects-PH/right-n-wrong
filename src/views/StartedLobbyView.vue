@@ -11,6 +11,8 @@ const gameMaxPoints = store.getExtractedMaxPoints() || 5;
 const gameCategories = store.getExtractedGameCategories();
 const numberOfTables = ref(0);
 const points = [100, 200, 300, 400, 500];
+const winnerMsg = ref<string>("");
+const someoneWon = ref<boolean>(false);
 
 let selectedCandidate: Candidate|null = null;
 let selectedCategory: GameCategory|null = null;
@@ -70,6 +72,16 @@ function toggleStart() {
   }
 
   if (isCounting) {
+    //check if every category is finished and call out winner
+    winnerMsg.value = "";
+
+    const finishedCategories = gameCategories?.filter((cat) => cat.finisheds?.length === gameMaxPoints);
+    if (finishedCategories?.length === numberOfCategories.value) {
+      const winner = candidateList?.reduce((prev, current) => (prev.score > current.score) ? prev : current);
+      winnerMsg.value = `Gewonnen hat ${winner?.name} mit ${winner?.score} Punkten!`;
+      someoneWon.value = true;
+    }
+
     isCounting = false;
     selectedPoint = null;
     selectedCategory = null;
@@ -88,12 +100,17 @@ function toggleStart() {
     <h1 class="creation-headline">Ich hab's richtig, aber ich hab's falsch</h1>
     <hr class="rounded-creation-underliner">
   </div>
-  <transition-group tag="div" name="game-board" class="game-board-holder">
+  <div class="winner-msg-wrapper" v-if="someoneWon">
+    <p>
+      {{ winnerMsg }}
+    </p>
+  </div>
+  <div class="game-board-holder">
     <div class="category-table-wrapper" v-for="(cat, i) in gameCategories">
       <article class="category-table" :key="i">{{ cat.name }}</article>
       <article v-for="p in points" class="point-table" :key="i + '-' + p" @click="selectPoints(cat, p)" :style="{'opacity': cat.finisheds && cat.finisheds.includes(p) ? 0.5 : 1}">{{ p }}</article>
     </div>
-  </transition-group>
+  </div>
 
   <div class="candidate-holder">
     <div class="candidate-table" v-for="(candi, i) in candidateList" @click="selectCandidate(candi)">
@@ -104,6 +121,17 @@ function toggleStart() {
 </template>
 
 <style scoped lang="scss">
+
+.winner-msg-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: #91031FFF solid 4px;
+  color: #91031f;
+  border-radius: 100px;
+  width: 120rem;
+  margin: 0 auto 4rem auto;
+}
 
 .candidate-holder {
   display: flex;
@@ -118,7 +146,8 @@ function toggleStart() {
   .candidate-table {
     border: black solid 2px;
     border-radius: 15px;
-    margin-left: 0.8rem;
+    margin-left: 0.4rem;
+    margin-right: 0.4rem;
     width: 15rem;
     padding: 0.5rem 1rem;
 
@@ -206,21 +235,6 @@ function toggleStart() {
       }
     }
   }
-}
-
-/* Game Board Animation */
-.game-board-enter-from {
-  opacity: 0;
-  transform: scale(0.5);
-}
-
-.game-board-enter-to {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.game-board-enter-active {
-  transition: all 0.5s ease;
 }
 
 </style>
