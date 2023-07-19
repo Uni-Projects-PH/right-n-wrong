@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {useMainStore} from "@/stores/main";
-import {onMounted, onUnmounted, ref} from "vue";
+import {getCurrentInstance, onMounted, onUnmounted, ref} from "vue";
 import type {Candidate, GameCategory} from "@/@types/intern";
 
 const store = useMainStore();
@@ -19,6 +19,8 @@ let selectedCategory: GameCategory|null = null;
 let selectedPoint: number|null = null;
 let isCounting: boolean = false;
 
+const updateForcer = ref(0);
+
 function createGameBoard() {
   candidateList?.forEach((candidate) => {
     numberOfCandidates.value++;
@@ -31,7 +33,6 @@ function createGameBoard() {
   numberOfTables.value = gameMaxPoints * numberOfCategories.value;
 
 }
-
 
 onMounted(() => {
   createGameBoard();
@@ -60,10 +61,14 @@ function selectPoints(cat: GameCategory, point: number) {
 
   selectedCategory = cat;
   selectedPoint = point;
+
+  updateForcer.value = Date.now();
 }
 
 function selectCandidate(candi: Candidate) {
   selectedCandidate = candi;
+
+  updateForcer.value = Date.now();
 }
 
 function toggleStart() {
@@ -86,12 +91,24 @@ function toggleStart() {
     selectedPoint = null;
     selectedCategory = null;
     selectedCandidate = null;
+
+    updateForcer.value = Date.now();
     return;
   }
 
   selectedCategory.finisheds = selectedCategory.finisheds || [];
   selectedCategory.finisheds.push(selectedPoint);
   isCounting = true;
+
+    updateForcer.value = Date.now();
+}
+
+function isPointTableSelected(cat: GameCategory, point: number) {
+  if (!selectedCategory || !selectedPoint) {
+    return false;
+  }
+
+  return selectedCategory === cat && selectedPoint === point;
 }
 </script>
 
@@ -108,12 +125,12 @@ function toggleStart() {
   <div class="game-board-holder">
     <div class="category-table-wrapper" v-for="(cat, i) in gameCategories">
       <article class="category-table" :key="i">{{ cat.name }}</article>
-      <article v-for="p in points" class="point-table" :key="i + '-' + p" @click="selectPoints(cat, p)" :style="{'opacity': cat.finisheds && cat.finisheds.includes(p) ? 0.5 : 1}">{{ p }}</article>
+      <article v-for="p in points" class="point-table" :class="{'selected': isPointTableSelected(cat, p)}" :key="i + '-' + p + updateForcer" @click="selectPoints(cat, p)" :style="{'opacity': cat.finisheds && cat.finisheds.includes(p) ? 0.5 : 1}">{{ p }}</article>
     </div>
   </div>
 
   <div class="candidate-holder">
-    <div class="candidate-table" v-for="(candi, i) in candidateList" @click="selectCandidate(candi)">
+    <div class="candidate-table" v-for="(candi, i) in candidateList" :key="i + ':_' + updateForcer" @click="selectCandidate(candi)" :style="{'background': candi === selectedCandidate ? 'orange' : 'none'}">
       <div class="candidate-name" :key="i">{{ candi.name + ':' }}</div>
       <div class="candidate-points">{{ candi.score }}</div>
     </div>
@@ -233,6 +250,14 @@ function toggleStart() {
       @media only screen and (min-width: 1960px) {
         width: 18rem;
       }
+    }
+
+    &.selected {
+      border: orangered solid 2px;
+      color: orangered;
+    }
+    &:not(.selected) {
+      border: black solid 2px;
     }
   }
 }
