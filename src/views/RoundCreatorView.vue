@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {ref} from "vue";
-import type {Candidate, GameCategory} from "@/@types/intern";
-import router from "@/router";
-import {useMainStore} from "@/stores/main";
+import router from "../router";
+import type {Candidate, GameCategory} from "../@types/intern.ts";
+import {useMainStore} from "../stores/main.ts";
 
   const store = useMainStore();
 

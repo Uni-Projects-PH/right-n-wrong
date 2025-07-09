@@ -1,6 +1,6 @@
 @font-face {
   font-family: Oswald;
-  src: url("@/styles/typographs/Oswald-Light.ttf");
+  src: url("./typographs/Oswald-Light.ttf");
   font-style: normal;
   font-display: swap;
 }
@@ -24,6 +24,7 @@ h2 {
 
 .creation-headliner {
   font-size: 2rem;
+  height: 20vh;
   display: flex;
   flex-direction: column;
   align-items: center;

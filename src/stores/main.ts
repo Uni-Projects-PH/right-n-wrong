@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
-import type {Candidate, GameCategory} from "@/@types/intern";
+import type {Candidate, GameCategory} from "../@types/intern.ts";
 
 export const useMainStore = defineStore("main", {
     state: () => ({
@@ -19,7 +19,7 @@ export const useMainStore = defineStore("main", {
             this.extractedGameCategories = gameCategoryArr;
         },
         setExtractedMaxPoints(maxPoints: number) {
-          this.extractedMaxPoints = maxPoints;
+            this.extractedMaxPoints = maxPoints;
         },
         getCreatedCandidates() {
             return this.createdCandidateList;

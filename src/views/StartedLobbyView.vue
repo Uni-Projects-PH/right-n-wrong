@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {useMainStore} from "@/stores/main";
-import {getCurrentInstance, onMounted, onUnmounted, ref} from "vue";
-import type {Candidate, GameCategory} from "@/@types/intern";
+import {onMounted, onUnmounted, ref} from "vue";
+import {useMainStore} from "../stores/main.ts";
+import type {Candidate, GameCategory} from "../@types/intern.ts";
 
 const store = useMainStore();
 const candidateList = store.getCreatedCandidateList();
