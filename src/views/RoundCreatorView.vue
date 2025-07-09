@@ -91,7 +91,7 @@ import {useMainStore} from "../stores/main.ts";
 
       <div class="candidate-box">
         <ul class="candidate-list">
-          <li v-for="(candidate, i) in candidateList" :key="candidate" @click="removeItem(i)">
+          <li v-for="(candidate, i) in candidateList" :key="candidate.name" @click="removeItem(i)">
             {{ candidate.name }}
           </li>
         </ul>

@@ -22,14 +22,8 @@ let isCounting: boolean = false;
 const updateForcer = ref(0);
 
 function createGameBoard() {
-  candidateList?.forEach((candidate) => {
-    numberOfCandidates.value++;
-  })
-
-  gameCategories?.forEach((category) => {
-    numberOfCategories.value++;
-  })
-
+  numberOfCandidates.value = candidateList?.length || 0;
+  numberOfCategories.value = gameCategories?.length || 0;
   numberOfTables.value = gameMaxPoints * numberOfCategories.value;
 
 }

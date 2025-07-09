@@ -1,9 +1,8 @@
 import {createI18n} from "vue-i18n";
 
-import eng from "@/localizations/eng.json";
+import eng from "../localizations/eng.json";
 
-import ger from "@/localizations/ger.json";
-import {ref} from "vue";
+import ger from "../localizations/ger.json";
 
 export const i18n = createI18n({
     locale: 'en',
